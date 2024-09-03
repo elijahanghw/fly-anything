@@ -1,4 +1,11 @@
 import numpy as np
+from numpy.linalg import norm
+
+def rad(deg):
+    return deg/180*np.pi
+
+def deg(rad):
+    return rad/np.pi*180
 
 def q_to_r(q):
     q0 = q[0]
@@ -27,3 +34,17 @@ def omega_to_qdot(q, omega):
                             wz*q0 + wy*q1 - wx*q2])
     
     return q_dot
+
+def vectors_to_quaternion(v1, v2):
+    q= np.zeros(4)
+    axis = np.cross(v1, v2)
+    angle = np.arcsin(norm(axis))
+    q[0] = np.cos(angle/2)
+    
+    if q[0] == 1:
+        return q
+    
+    else:
+        q[1:] = np.sin(angle/2) * axis/norm(axis)
+
+    return q

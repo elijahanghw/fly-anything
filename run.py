@@ -5,7 +5,7 @@ from flypy.simulate import Simulator
 
 # Load drone
 file = "./drones/ctrl_drone.json"
-M, I, Bf, Bm, eta_hat = load_drone(file)
+M, I, Bf, Bm, eta_hat, q_hover = load_drone(file)
 
 # Simulation parameters
 dt = 0.01
@@ -15,14 +15,15 @@ num_steps = 1000
 X0 = np.array([0, 0, 0])
 v0 = np.array([0, 0, 0])
 
-q0 = np.array([1, 0, 0, 0])
+# q0 = np.array([1, 0, 0, 0])
+q0 = q_hover
 omega0 = np.array([0, 0, 0])
 
 # Initialize simulator
-sim = Simulator(M, I, Bf, Bm, eta_hat)
+sim = Simulator(M, I, Bf, Bm, eta_hat, q_hover)
 sim.initialize_states(X0, v0, q0, omega0)
 
-sim.stick_inputs(2, 0, 0, 0)
+sim.stick_inputs(1, 0, 0, 0)
 
 X, v, q, omega = sim.simulate(dt, num_steps)
 
