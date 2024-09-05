@@ -37,10 +37,10 @@ def omega_to_qdot(q, omega):
 
 def vectors_to_quaternion(v1, v2):
     q= np.zeros(4)
-    axis = np.cross(v1, v2)
+    axis = np.cross(v1/norm(v1), v2/norm(v2))
     angle = np.arcsin(norm(axis))
     q[0] = np.cos(angle/2)
-    
+
     if q[0] == 1:
         return q
     

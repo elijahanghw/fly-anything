@@ -7,13 +7,12 @@ from dronehover.optimization import Hover
 
 def load_drone(path):
     # Load drone
-    file = "./drones/ctrl_drone.json"
-    with open(file, 'r') as f:
+    with open(path, 'r') as f:
         props = json.load(f)
 
     drone = Custombody(props)
     drone_properties = Hover(drone)
-    drone_properties.compute_hover()
+    drone_properties.compute_hover(tol=1e-6)
     
     M = drone.mass * np.eye(3)
     Ixx = drone.Ix
